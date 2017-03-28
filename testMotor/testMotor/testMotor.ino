@@ -1,5 +1,5 @@
 /*
- * 
+ * Kalpesh Patil
  * Motor Testing Code
  * Motor1 +: 1Y -:2Y (motor1Pin,motor2Pin)
  * Motor2 +: 4Y -:3Y (motor3Pin,motor4Pin)
@@ -16,7 +16,7 @@ const int motor4Pin = 6;    // H-bridge leg 2 (pin 15, 4A)
 const int enablePin2 = 10;    // H-bridge enable pin
 
 void setup() {
-  // set the switch as an input:
+
   // set all the other pins you're using as outputs:
   pinMode(motor1Pin, OUTPUT);
   pinMode(motor2Pin, OUTPUT);
