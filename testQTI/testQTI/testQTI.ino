@@ -2,7 +2,7 @@
  * Kalpesh Patil
  * QTI Sensor as an analog input
  * W: Ein
- * R: I/O
+ * R: I/O: A4
  * B: GND
  * 
  */
