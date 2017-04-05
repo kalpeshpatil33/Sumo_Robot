@@ -1,15 +1,10 @@
 
-
 #include <Servo.h>
 Servo myservo1;// create servo object to control a servo
 Servo myservo2;
+volatile int whiteLine;
 int sensorVal;
 const int sensor = A4;
-
-byte interruptPin = 0;  // your interrupt pin
-volatile boolean ISRRan = 0;  // this variable is set in your ISR to trigger a break in the while loop
-byte C = 0;  // this is just the counter var for the while loop
-
 
 void goForward()
 {
@@ -46,45 +41,53 @@ void goStop()
   myservo2.write(95);
 }
 
-void setup()
-{
+void setup() {
+
   myservo1.attach(9);  // attaches the servo on pin 9 to the servo object
   myservo2.attach(8);
-
   Serial.begin(9600);
-  pinMode(sensor, INPUT);
+  pinMode(sensor, INPUT); //set as input so we can perform a read on the pin
+  Serial.begin(9600);
+  digitalWrite(sensor, HIGH);
+  pinMode(2, INPUT);
+  digitalWrite(2, HIGH);
 
-  attachInterrupt(interruptPin, myISR, RISING);
+  attachInterrupt(0, whiteLineISR, LOW);
+
+  // we need to call this to enable interrupts
+  interrupts();
+
+  // start moving
+  whiteLine = 0;
+  goForward();
+  delay(1000);
+  goBackward();
+  delay(1000);
+  goLeft();
+  delay(1000);
+  goRight();
+  delay(1000);
 
 }
 
-void myISR() {
-  ISRRan = 1;
-  // do other things in the ISR
+void whiteLineISR() {
+  goStop();
+  Serial.println("Interrupt stop");
+  whiteLine = 0;
 }
 
 void loop() {
-  digitalWrite(sensor, HIGH);
   sensorVal = analogRead(sensor);
-  Serial.println(sensorVal);
-  while (sensorVal > 60) {
-    if ( ISRRan ) {
-      break;
+    if (whiteLine > 0) {
+  //    goStop();
+  ////    whiteLine = 0;
+  goForward();
+  delay(1000);
+  goBackward();
+  delay(1000);
+  goLeft();
+  delay(1000);
+  goRight();
+  delay(1000);
     }
-    Serial.println(sensorVal);
-    goForward();
-    delay(5000);
-    goBackward();
-    delay(5000);
-    goLeft();
-    delay(5000);
-    goRight();
-    delay(5000);
-  }
-  Serial.println(sensorVal);
-  goStop();
-  ISRRan = 0;  // Reset for whatever reason
 }
-
-
-
