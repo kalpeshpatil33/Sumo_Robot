@@ -7,7 +7,7 @@
  * 
  */
 int sensorVal; 
-const int sensor = A4; 
+const int sensor = 2; 
 
 void setup() {
   Serial.begin(9600);
@@ -18,7 +18,7 @@ void loop() {
   digitalWrite(sensor, HIGH); //set it high to produce an output signal
   //it seems weird because the sensor is an input device
   
-  sensorVal = analogRead(sensor); //save the value from the analog read into sensorVal
+  sensorVal = digitalRead(sensor); //save the value from the analog read into sensorVal
   Serial.println(sensorVal); //display sensorVal
   delay(100);
 }
