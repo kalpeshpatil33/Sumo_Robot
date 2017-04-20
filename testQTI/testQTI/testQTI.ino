@@ -7,7 +7,7 @@
  * 
  */
 int sensorVal; 
-const int sensor = 2; 
+const int sensor = 22; 
 
 void setup() {
   Serial.begin(9600);
