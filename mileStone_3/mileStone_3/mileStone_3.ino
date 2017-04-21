@@ -1,5 +1,5 @@
 
-int flag_Found = 0;
+int flag_Found;
 
 
 //********** Wheels Variable **********
@@ -116,6 +116,13 @@ void setup() {
   LEFT_whiteLine = 0;
   RIGHT_whiteLine = 0;
 
+
+  pinMode(FRONT_trigPin, OUTPUT);
+  pinMode(FRONT_echoPin, INPUT);
+
+flag_Found = 0;
+
+
 }
 
 void MIDDLE_whiteLineISR() {
@@ -139,50 +146,52 @@ void LEFT_whiteLineISR() {
 
 
 void loop() {
-  flag_Found = 0;
-
   MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
   LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
   RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
 
   Serial.println("Starts reading....");
-  Serial.println(FRONT_distance);
+  //FRONT_HC();
+  //  Serial.println(FRONT_distance);
 
-  if (MIDDLE_whiteLine == 1)
-  {
-    if (flag_Found == 0)
+    if (MIDDLE_whiteLine == 1)
     {
-      searchBot();
-      delay(1000);
-      goU();
-      delay(100);
+      Serial.println("No White Line");
+      if (flag_Found == 0)
+      {
+        goU();
+        delay(100);
+        searchBot();
+        delay(1000);
+      }
     }
-  }
-  else
-  {
-    goStop();
-    Serial.println(MIDDLE_sensorVal);
-    Serial.println("Interrupt stop");
-    MIDDLE_whiteLine = 0;
-  }
-
-  if (RIGHT_whiteLine == 1)
-  {
-    Serial.println("Right");
-    RIGHT_whiteLine = 0;
-  }
-
-  if (LEFT_whiteLine == 1)
-  {
-    Serial.println("Left");
-    LEFT_whiteLine = 0;
-  }
+    else
+    {
+      goStop();
+      Serial.println(MIDDLE_sensorVal);
+      Serial.println("Interrupt stop");
+      MIDDLE_whiteLine = 0;
+    }
+  
+    if (RIGHT_whiteLine == 1)
+    {
+      Serial.println("Right");
+      RIGHT_whiteLine = 0;
+    }
+  
+    if (LEFT_whiteLine == 1)
+    {
+      Serial.println("Left");
+      LEFT_whiteLine = 0;
+    }
+    flag_Found = 0;
 }
 
 void FRONT_HC()
 {
   digitalWrite(FRONT_trigPin, LOW);
   digitalWrite(FRONT_trigPin, HIGH);
+  delay(100);
   digitalWrite(FRONT_trigPin, LOW);
   FRONT_duration = pulseIn(FRONT_echoPin, HIGH);
   FRONT_distance = (FRONT_duration / 2) / 29.1;
@@ -222,6 +231,8 @@ void searchBot ()
   FRONT_HC();
   if (FRONT_distance < 30 && flag_Found == 0 )
   {
+    Serial.println("Front Detected");
+    Serial.println(FRONT_distance);
     goForward();
     delay(450);
     goStop();

@@ -12,7 +12,7 @@ void loop() {
 
   digitalWrite(trigPin, LOW); 
   digitalWrite(trigPin, HIGH);
-delay(1000);
+delay(100);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = (duration / 2) / 29.1;
