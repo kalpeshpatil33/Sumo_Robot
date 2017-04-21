@@ -1,6 +1,7 @@
 
 int flag_Found = 0;
 
+
 //********** Wheels Variable **********
 #include <Servo.h>
 Servo myservo1;
@@ -19,7 +20,7 @@ int LEFT_sensorVal;
 //********** QTI RIGHT Variable **********
 volatile int RIGHT_whiteLine;
 int RIGHT_sensorVal;
-#define RIGHT_pinQTIsensor 21
+#define RIGHT_pinQTIsensor 18
 
 //********** HC-SR04 FRONT Variable **********
 #define FRONT_trigPin 13
@@ -27,18 +28,18 @@ int RIGHT_sensorVal;
 long FRONT_duration, FRONT_distance;
 
 //********** HC-SR04 BACK Variable **********
-#define BACK_trigPin 13
-#define BACK_echoPin 12
+#define BACK_trigPin 21
+#define BACK_echoPin 22
 long BACK_duration, BACK_distance;
 
 //********** HC-SR04 LEFT Variable **********
-#define LEFT_trigPin 13
-#define LEFT_echoPin 12
+#define LEFT_trigPin 21
+#define LEFT_echoPin 22
 long LEFT_duration, LEFT_distance;
 
 //********** HC-SR04 RIGHT Variable **********
-#define RIGHT_trigPin 13
-#define RIGHT_echoPin 12
+#define RIGHT_trigPin 21
+#define RIGHT_echoPin 22
 long RIGHT_duration, RIGHT_distance;
 
 
@@ -112,6 +113,9 @@ void setup() {
   // we need to call this to enable interrupts
   interrupts();
   MIDDLE_whiteLine = 1;
+  LEFT_whiteLine = 0;
+  RIGHT_whiteLine = 0;
+
 }
 
 void MIDDLE_whiteLineISR() {
@@ -122,20 +126,12 @@ void MIDDLE_whiteLineISR() {
 }
 
 void RIGHT_whiteLineISR() {
-  goLeft();
-  delay(450);
-  goForward();
-  delay(450);
-  Serial.println(RIGHT_sensorVal);
+  RIGHT_whiteLine = 1;
   Serial.println("RIGHT  Interrupt");
 }
 
 void LEFT_whiteLineISR() {
-  goRight();
-  delay(450);
-  goForward();
-  delay(450);
-  Serial.println(LEFT_sensorVal);
+  LEFT_whiteLine = 1;
   Serial.println("LEFT Interrupt");
 }
 
@@ -143,11 +139,14 @@ void LEFT_whiteLineISR() {
 
 
 void loop() {
+  flag_Found = 0;
+
   MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
   LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
   RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
 
-Serial.println("Starts reading....");
+  Serial.println("Starts reading....");
+  Serial.println(FRONT_distance);
 
   if (MIDDLE_whiteLine == 1)
   {
@@ -165,6 +164,18 @@ Serial.println("Starts reading....");
     Serial.println(MIDDLE_sensorVal);
     Serial.println("Interrupt stop");
     MIDDLE_whiteLine = 0;
+  }
+
+  if (RIGHT_whiteLine == 1)
+  {
+    Serial.println("Right");
+    RIGHT_whiteLine = 0;
+  }
+
+  if (LEFT_whiteLine == 1)
+  {
+    Serial.println("Left");
+    LEFT_whiteLine = 0;
   }
 }
 
@@ -209,7 +220,7 @@ void searchBot ()
   delay(1000);
 
   FRONT_HC();
-  if (FRONT_distance < 30)
+  if (FRONT_distance < 30 && flag_Found == 0 )
   {
     goForward();
     delay(450);
@@ -222,7 +233,7 @@ void searchBot ()
   }
 
   BACK_HC();
-  if (BACK_distance < 30)
+  if (BACK_distance < 30 && flag_Found == 0 )
   {
     goU();
     delay(450);
@@ -235,7 +246,7 @@ void searchBot ()
   }
 
   RIGHT_HC();
-  if (RIGHT_distance < 30)
+  if (RIGHT_distance < 30 && flag_Found == 0 )
   {
     goRight();
     delay(450);
@@ -248,7 +259,7 @@ void searchBot ()
   }
 
   LEFT_HC();
-  if (LEFT_distance < 30)
+  if (LEFT_distance < 30 && flag_Found == 0 )
   {
     goLeft();
     delay(450);
