@@ -164,6 +164,10 @@ void loop() {
         searchBot();
         delay(1000);
       }
+      else
+      {
+        Serial.print("FLAG FOUND 1");
+      }
     }
     else
     {
@@ -184,7 +188,6 @@ void loop() {
       Serial.println("Left");
       LEFT_whiteLine = 0;
     }
-    flag_Found = 0;
 }
 
 void FRONT_HC()
@@ -201,6 +204,7 @@ void BACK_HC()
 {
   digitalWrite(BACK_trigPin, LOW);
   digitalWrite(BACK_trigPin, HIGH);
+    delay(100);
   digitalWrite(BACK_trigPin, LOW);
   BACK_duration = pulseIn(BACK_echoPin, HIGH);
   BACK_distance = (BACK_duration / 2) / 29.1;
@@ -210,6 +214,7 @@ void LEFT_HC()
 {
   digitalWrite(LEFT_trigPin, LOW);
   digitalWrite(LEFT_trigPin, HIGH);
+    delay(100);
   digitalWrite(LEFT_trigPin, LOW);
   LEFT_duration = pulseIn(LEFT_echoPin, HIGH);
   LEFT_distance = (LEFT_duration / 2) / 29.1;
@@ -219,6 +224,7 @@ void RIGHT_HC()
 {
   digitalWrite(RIGHT_trigPin, LOW);
   digitalWrite(RIGHT_trigPin, HIGH);
+    delay(100);
   digitalWrite(RIGHT_trigPin, LOW);
   RIGHT_duration = pulseIn(RIGHT_echoPin, HIGH);
   RIGHT_distance = (RIGHT_duration / 2) / 29.1;
