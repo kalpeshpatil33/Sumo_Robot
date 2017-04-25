@@ -87,7 +87,7 @@ void goU()
 {
   Serial.println("U");
   myservo1.write(0);
-  myservo2.write(190);
+  myservo2.write(0);
 }
 
 void setup() {
@@ -120,7 +120,7 @@ void setup() {
   pinMode(FRONT_trigPin, OUTPUT);
   pinMode(FRONT_echoPin, INPUT);
 
-flag_Found = 0;
+  flag_Found = 0;
 
 
 }
@@ -142,54 +142,6 @@ void LEFT_whiteLineISR() {
   Serial.println("LEFT Interrupt");
 }
 
-
-
-
-void loop() {
-  MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
-  LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
-  RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
-
-  Serial.println("Starts reading....");
-  //FRONT_HC();
-  //  Serial.println(FRONT_distance);
-
-    if (MIDDLE_whiteLine == 1)
-    {
-      Serial.println("No White Line");
-      if (flag_Found == 0)
-      {
-        goU();
-        delay(100);
-        searchBot();
-        delay(1000);
-      }
-      else
-      {
-        Serial.print("FLAG FOUND 1");
-      }
-    }
-    else
-    {
-      goStop();
-      Serial.println(MIDDLE_sensorVal);
-      Serial.println("Interrupt stop");
-      MIDDLE_whiteLine = 0;
-    }
-  
-    if (RIGHT_whiteLine == 1)
-    {
-      Serial.println("Right");
-      RIGHT_whiteLine = 0;
-    }
-  
-    if (LEFT_whiteLine == 1)
-    {
-      Serial.println("Left");
-      LEFT_whiteLine = 0;
-    }
-}
-
 void FRONT_HC()
 {
   digitalWrite(FRONT_trigPin, LOW);
@@ -204,7 +156,6 @@ void BACK_HC()
 {
   digitalWrite(BACK_trigPin, LOW);
   digitalWrite(BACK_trigPin, HIGH);
-    delay(100);
   digitalWrite(BACK_trigPin, LOW);
   BACK_duration = pulseIn(BACK_echoPin, HIGH);
   BACK_distance = (BACK_duration / 2) / 29.1;
@@ -214,7 +165,6 @@ void LEFT_HC()
 {
   digitalWrite(LEFT_trigPin, LOW);
   digitalWrite(LEFT_trigPin, HIGH);
-    delay(100);
   digitalWrite(LEFT_trigPin, LOW);
   LEFT_duration = pulseIn(LEFT_echoPin, HIGH);
   LEFT_distance = (LEFT_duration / 2) / 29.1;
@@ -224,7 +174,6 @@ void RIGHT_HC()
 {
   digitalWrite(RIGHT_trigPin, LOW);
   digitalWrite(RIGHT_trigPin, HIGH);
-    delay(100);
   digitalWrite(RIGHT_trigPin, LOW);
   RIGHT_duration = pulseIn(RIGHT_echoPin, HIGH);
   RIGHT_distance = (RIGHT_duration / 2) / 29.1;
@@ -232,16 +181,13 @@ void RIGHT_HC()
 
 void searchBot ()
 {
-  delay(1000);
-
   FRONT_HC();
   if (FRONT_distance < 30 && flag_Found == 0 )
   {
     Serial.println("Front Detected");
     Serial.println(FRONT_distance);
     goForward();
-    delay(450);
-    goStop();
+    delay(500);
     flag_Found = 1;
   }
   else
@@ -249,43 +195,86 @@ void searchBot ()
     goStop();
   }
 
-  BACK_HC();
-  if (BACK_distance < 30 && flag_Found == 0 )
+  //  BACK_HC();
+  //  if (BACK_distance < 30 && flag_Found == 0 )
+  //  {
+  //    goU();
+  //    delay(450);
+  //    goStop();
+  //    flag_Found = 1;
+  //  }
+  //  else
+  //  {
+  //    goStop();
+  //  }
+  //
+  //  RIGHT_HC();
+  //  if (RIGHT_distance < 30 && flag_Found == 0 )
+  //  {
+  //    goRight();
+  //    delay(450);
+  //    goStop();
+  //    flag_Found = 1;
+  //  }
+  //  else
+  //  {
+  //    goStop();
+  //  }
+  //
+  //  LEFT_HC();
+  //  if (LEFT_distance < 30 && flag_Found == 0 )
+  //  {
+  //    goLeft();
+  //    delay(450);
+  //    goStop();
+  //    flag_Found = 1;
+  //  }
+  //  else
+  //  {
+  //    goStop();
+  //  }
+}
+
+void loop() {
+  MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
+  LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
+  RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
+
+  Serial.println("Starts reading....");
+  //FRONT_HC();
+  //  Serial.println(FRONT_distance);
+
+  if (MIDDLE_whiteLine == 1)
   {
-    goU();
-    delay(450);
-    goStop();
-    flag_Found = 1;
+    Serial.println("No White Line");
+    if (flag_Found == 0)
+    {
+      searchBot();
+    }
   }
   else
   {
     goStop();
+    Serial.println(MIDDLE_sensorVal);
+    Serial.println("Interrupt stop");
+    MIDDLE_whiteLine = 0;
   }
-
-  RIGHT_HC();
-  if (RIGHT_distance < 30 && flag_Found == 0 )
-  {
-    goRight();
-    delay(450);
-    goStop();
-    flag_Found = 1;
-  }
-  else
-  {
-    goStop();
-  }
-
-  LEFT_HC();
-  if (LEFT_distance < 30 && flag_Found == 0 )
+  if (flag_Found == 0)
   {
     goLeft();
-    delay(450);
-    goStop();
-    flag_Found = 1;
+    goRight();
   }
-  else
+  if (RIGHT_whiteLine == 1)
   {
-    goStop();
+    Serial.println("Right");
+    RIGHT_whiteLine = 0;
   }
+
+  if (LEFT_whiteLine == 1)
+  {
+    Serial.println("Left");
+    LEFT_whiteLine = 0;
+  }
+  flag_Found = 0;
 }
 
