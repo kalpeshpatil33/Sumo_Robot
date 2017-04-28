@@ -1,4 +1,3 @@
-
 int flag_Found;
 
 
@@ -6,8 +5,10 @@ int flag_Found;
 #include <Servo.h>
 Servo myservo1;
 Servo myservo2;
+#define HCdistance 35
 
 //********** QTI MIDDLE Variable **********
+// BLACK == 1
 volatile int MIDDLE_whiteLine;
 int MIDDLE_sensorVal;
 #define MIDDLE_pinQTIsensor 2
@@ -15,12 +16,12 @@ int MIDDLE_sensorVal;
 //********** QTI LEFT Variable **********
 volatile int LEFT_whiteLine;
 int LEFT_sensorVal;
-#define LEFT_pinQTIsensor 3
+#define LEFT_pinQTIsensor 21
 
 //********** QTI RIGHT Variable **********
 volatile int RIGHT_whiteLine;
 int RIGHT_sensorVal;
-#define RIGHT_pinQTIsensor 18
+#define RIGHT_pinQTIsensor 20
 
 //********** HC-SR04 FRONT Variable **********
 #define FRONT_trigPin 13
@@ -90,58 +91,6 @@ void goU()
   myservo2.write(0);
 }
 
-void setup() {
-
-  Serial.begin(9600);
-
-  myservo1.attach(9);  // attaches the servo on pin 9 to the servo object
-  myservo2.attach(8);
-
-  pinMode(MIDDLE_pinQTIsensor, INPUT);
-  digitalWrite(MIDDLE_pinQTIsensor, HIGH);
-
-  pinMode(RIGHT_pinQTIsensor, INPUT);
-  digitalWrite(RIGHT_pinQTIsensor, HIGH);
-
-  pinMode(LEFT_pinQTIsensor, INPUT);
-  digitalWrite(LEFT_pinQTIsensor, HIGH);
-
-  attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsensor), MIDDLE_whiteLineISR, LOW);
-  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
-  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
-
-  // we need to call this to enable interrupts
-  interrupts();
-  MIDDLE_whiteLine = 1;
-  LEFT_whiteLine = 0;
-  RIGHT_whiteLine = 0;
-
-
-  pinMode(FRONT_trigPin, OUTPUT);
-  pinMode(FRONT_echoPin, INPUT);
-
-  flag_Found = 0;
-
-
-}
-
-void MIDDLE_whiteLineISR() {
-  goStop();
-  Serial.println(MIDDLE_sensorVal);
-  Serial.println("STOP Interrupt");
-  MIDDLE_whiteLine = 0;
-}
-
-void RIGHT_whiteLineISR() {
-  RIGHT_whiteLine = 1;
-  Serial.println("RIGHT  Interrupt");
-}
-
-void LEFT_whiteLineISR() {
-  LEFT_whiteLine = 1;
-  Serial.println("LEFT Interrupt");
-}
-
 void FRONT_HC()
 {
   digitalWrite(FRONT_trigPin, LOW);
@@ -181,20 +130,15 @@ void RIGHT_HC()
 
 void searchBot ()
 {
+  Serial.println("Searching");
   FRONT_HC();
-  if (FRONT_distance < 30 && flag_Found == 0 )
+  if (FRONT_distance < HCdistance && flag_Found == 0 )
   {
     Serial.println("Front Detected");
     Serial.println(FRONT_distance);
     goForward();
-    delay(500);
     flag_Found = 1;
   }
-  else
-  {
-    goStop();
-  }
-
   //  BACK_HC();
   //  if (BACK_distance < 30 && flag_Found == 0 )
   //  {
@@ -235,15 +179,71 @@ void searchBot ()
   //  }
 }
 
-void loop() {
+void setup() {
+
+  Serial.begin(115200);
+
+  myservo1.attach(9);  // attaches the servo on pin 9 to the servo object
+  myservo2.attach(8);
+
+  pinMode(LEFT_pinQTIsensor, INPUT);
+  digitalWrite(LEFT_pinQTIsensor, HIGH);
+
+  pinMode(MIDDLE_pinQTIsensor, INPUT);
+  digitalWrite(MIDDLE_pinQTIsensor, HIGH);
+
+  pinMode(RIGHT_pinQTIsensor, INPUT);
+  digitalWrite(RIGHT_pinQTIsensor, HIGH);
+
+  attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsensor), MIDDLE_whiteLineISR, LOW);
+  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
+  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
+
+  // we need to call this to enable interrupts
+  interrupts();
+  MIDDLE_whiteLine = 1;
+  LEFT_whiteLine = 0;
+  RIGHT_whiteLine = 0;
+
+
+  pinMode(FRONT_trigPin, OUTPUT);
+  pinMode(FRONT_echoPin, INPUT);
+
+  flag_Found = 0;
+
+  Serial.println("Initializing all sensors");
+  delay(500);
+}
+
+void MIDDLE_whiteLineISR() {
+  goStop();
+  Serial.println(MIDDLE_sensorVal);
+  Serial.println("STOP Interrupt");
+  MIDDLE_whiteLine = 0;
+}
+
+void RIGHT_whiteLineISR() {
+  goLeft();
+  RIGHT_whiteLine = 1;
+  Serial.println("RIGHT Interrupt");
+  MIDDLE_whiteLine = 0;
+}
+
+void LEFT_whiteLineISR() {
+  goRight();
+  LEFT_whiteLine = 1;
+  Serial.println("LEFT Interrupt");
+  MIDDLE_whiteLine = 0;
+}
+void loop()
+{
+  Serial.println("Starts reading....");
   MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
   LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
   RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
-
-  Serial.println("Starts reading....");
-  //FRONT_HC();
-  //  Serial.println(FRONT_distance);
-
+  Serial.println("MIDDLE_sensorVal: " + String(MIDDLE_sensorVal));
+  Serial.println("LEFT_sensorVal: " + String(LEFT_sensorVal));
+  Serial.println("RIGHT_sensorVal: " + String(RIGHT_sensorVal));
   if (MIDDLE_whiteLine == 1)
   {
     Serial.println("No White Line");
@@ -251,30 +251,35 @@ void loop() {
     {
       searchBot();
     }
-  }
-  else
-  {
-    goStop();
-    Serial.println(MIDDLE_sensorVal);
-    Serial.println("Interrupt stop");
-    MIDDLE_whiteLine = 0;
-  }
-  if (flag_Found == 0)
-  {
-    goLeft();
-    goRight();
-  }
-  if (RIGHT_whiteLine == 1)
-  {
-    Serial.println("Right");
-    RIGHT_whiteLine = 0;
+
+    if (flag_Found == 0)
+    {
+      goLeft();
+    }
+    flag_Found = 0;
   }
 
   if (LEFT_whiteLine == 1)
   {
-    Serial.println("Left");
+    Serial.println("LEFT Interrupt loop");
+    goRight();
+    delay(250);
+    goForward();
+    delay(500);
     LEFT_whiteLine = 0;
+    MIDDLE_whiteLine = 1;
   }
-  flag_Found = 0;
+
+  if (RIGHT_whiteLine == 1)
+  {
+    Serial.println("RIGHT Interrupt loop");
+    goLeft();
+    delay(250);
+    goForward();
+    delay(500);
+    RIGHT_whiteLine = 0;
+    MIDDLE_whiteLine = 1;
+  }
+//  delay(1000);
 }
 
