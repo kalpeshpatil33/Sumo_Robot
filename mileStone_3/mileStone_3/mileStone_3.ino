@@ -1,7 +1,6 @@
 int flag_Found;
 int count = 0;
 
-
 //********** Wheels Variable **********
 #include <Servo.h>
 Servo myservo1;
@@ -253,10 +252,11 @@ void loop()
       searchBot();
       count ++;
     }
-    if (count == 10)
+    if (count == 20)
     {
       goForward();
-      delay(200);
+      delay(100);
+      count = 0;
     }
     if (flag_Found == 0)
     {
