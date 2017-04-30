@@ -7,7 +7,8 @@
  * 
  */
 int sensorVal; 
-const int sensor = 21; 
+const int sensor = 20; 
+unsigned long ntime;
 
 void setup() {
   Serial.begin(9600);
@@ -15,11 +16,12 @@ void setup() {
 }
 
 void loop() {
+  ntime = millis();
   digitalWrite(sensor, HIGH); //set it high to produce an output signal
   //it seems weird because the sensor is an input device
   
   sensorVal = digitalRead(sensor); //save the value from the analog read into sensorVal
-  Serial.println(sensorVal); //display sensorVal
+  Serial.println(String(ntime) + " " + String(sensorVal)); //display sensorVal
   delay(100);
 }
   

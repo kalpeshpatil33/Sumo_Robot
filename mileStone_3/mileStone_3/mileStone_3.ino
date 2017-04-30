@@ -1,4 +1,5 @@
 int flag_Found;
+int count = 0;
 
 
 //********** Wheels Variable **********
@@ -196,15 +197,12 @@ void setup() {
   digitalWrite(RIGHT_pinQTIsensor, HIGH);
 
   attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsensor), MIDDLE_whiteLineISR, LOW);
-//  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
-//  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
+  //  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
+  //  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
 
   // we need to call this to enable interrupts
   interrupts();
   MIDDLE_whiteLine = 1;
-//  LEFT_whiteLine = 0;
-//  RIGHT_whiteLine = 0;
-
 
   pinMode(FRONT_trigPin, OUTPUT);
   pinMode(FRONT_echoPin, INPUT);
@@ -246,53 +244,58 @@ void loop()
   Serial.println("MIDDLE_sensorVal: " + String(MIDDLE_sensorVal));
   Serial.println("LEFT_sensorVal: " + String(LEFT_sensorVal));
   Serial.println("RIGHT_sensorVal: " + String(RIGHT_sensorVal));
+
   if (MIDDLE_whiteLine == 1)
   {
     Serial.println("No White Line");
     if (flag_Found == 0)
     {
       searchBot();
+      count ++;
     }
-
+    if (count == 10)
+    {
+      goForward();
+      delay(200);
+    }
     if (flag_Found == 0)
     {
       goLeft();
     }
     flag_Found = 0;
-  }
 
-  if (LEFT_sensorVal == 0 && RIGHT_sensorVal == 1 )
-  {
-    Serial.println("LEFT Interrupt loop");
-    goRight();
-    delay(500);
-    goForward();
-    delay(500);
-//    LEFT_whiteLine = 0;
-    MIDDLE_whiteLine = 1;
-  }
+    if (LEFT_sensorVal == 0 && RIGHT_sensorVal == 1 )
+    {
+      Serial.println("LEFT Interrupt loop");
+      goRight();
+      delay(500);
+      goForward();
+      delay(500);
+      MIDDLE_whiteLine = 1;
+    }
 
-  if (RIGHT_sensorVal == 0 && LEFT_sensorVal == 1)
-  {
-    Serial.println("RIGHT Interrupt loop");
-    goLeft();
-    delay(500);
-    goForward();
-    delay(500);
-//    RIGHT_whiteLine = 0;
-    MIDDLE_whiteLine = 1;
-  }
+    if (RIGHT_sensorVal == 0 && LEFT_sensorVal == 1)
+    {
+      Serial.println("RIGHT Interrupt loop");
+      goLeft();
+      delay(500);
+      goForward();
+      delay(500);
+      MIDDLE_whiteLine = 1;
+    }
 
-  if (RIGHT_sensorVal == 0 && LEFT_sensorVal == 0)
-  {
-    Serial.println("LEFT RIGHT Interrupt loop");
-    goStop();
-    delay(5000);
-    goU();
-    delay(500);
-    goForward();
-    delay(500);
+    if (RIGHT_sensorVal == 0 && LEFT_sensorVal == 0)
+    {
+      Serial.println("LEFT RIGHT Interrupt loop");
+      goStop();
+      delay(5000);
+      goU();
+      delay(500);
+      goStop();
+      delay(5000);
+      goForward();
+      delay(500);
+    }
   }
-//  delay(1000);
 }
 
