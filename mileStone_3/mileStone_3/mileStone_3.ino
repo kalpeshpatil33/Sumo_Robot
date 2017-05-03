@@ -290,7 +290,7 @@ void loop()
         goForward();
         delay(20);
         left_count++;
-        if (left_count > 8) {
+        if (left_count > 9) {
          left_count = 0; 
         }
       }
