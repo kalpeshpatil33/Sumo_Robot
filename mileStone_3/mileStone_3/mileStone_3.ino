@@ -5,7 +5,7 @@ int count = 0;
 #include <Servo.h>
 Servo myservo1;
 Servo myservo2;
-#define HCdistance 35
+#define HCdistance 50
 
 //********** QTI MIDDLE Variable **********
 // BLACK == 1
@@ -250,17 +250,23 @@ void loop()
     if (flag_Found == 0)
     {
       searchBot();
+      delay(50);
       count ++;
     }
-    if (count == 20)
+    if (count == 5)
     {
       goForward();
-      delay(100);
+      delay(10);
       count = 0;
     }
     if (flag_Found == 0)
     {
       goLeft();
+      delay(200);
+//      goStop();
+      goForward();
+      delay(100);
+//      goStop();
     }
     flag_Found = 0;
 
@@ -278,7 +284,7 @@ void loop()
     {
       Serial.println("RIGHT Interrupt loop");
       goLeft();
-      delay(500);
+      delay(300);
       goForward();
       delay(500);
       MIDDLE_whiteLine = 1;
@@ -288,13 +294,13 @@ void loop()
     {
       Serial.println("LEFT RIGHT Interrupt loop");
       goStop();
-      delay(5000);
+      delay(100);
       goU();
-      delay(500);
+      delay(50);
       goStop();
-      delay(5000);
+      delay(100);
       goForward();
-      delay(500);
+      delay(100);
     }
   }
 }
