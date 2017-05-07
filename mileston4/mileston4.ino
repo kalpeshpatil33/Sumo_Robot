@@ -259,7 +259,7 @@ void loop()
       goForward();
     }
 
-    else if (flag_Right == 1 && flag_Left == 0)
+    else if (flag_Found == 1 && flag_Right == 1 && flag_Left == 0)
     {
       goRight();
     }
