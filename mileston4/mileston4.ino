@@ -1,4 +1,7 @@
 int flag_Found;
+int flag_Right = 0;
+int flag_Left = 0;
+
 int count = 0;
 int left_count = 0;
 
@@ -134,70 +137,41 @@ void RIGHT_HC()
 void searchBot ()
 {
   Serial.println("Searching");
+
   LEFT_HC(); RIGHT_HC();
+
   if (LEFT_distance < HCdistance && RIGHT_distance < HCdistance && flag_Found == 0 )
   {
     Serial.println("Front Detected");
     Serial.println(String(LEFT_distance) + " " + String(RIGHT_distance));
-    goForward();
+    //    goForward();
     flag_Found = 1;
+    flag_Right = 0;
+    flag_Left = 0;
   }
 
-  if (LEFT_distance < HCdistance  && flag_Found == 0 )
+  //  LEFT_HC(); RIGHT_HC();
+
+  if (LEFT_distance < HCdistance && RIGHT_distance > HCdistance && flag_Found == 0)
   {
     Serial.println("LEFT Detected");
     Serial.println(LEFT_distance);
-    goLeft();
+    //    goLeft();
     flag_Found = 1;
+    flag_Right = 0;
+    flag_Left = 1;
   }
+  //  LEFT_HC(); RIGHT_HC();
 
-  if (RIGHT_distance < HCdistance && flag_Found == 0 )
+  if (RIGHT_distance < HCdistance && LEFT_distance > HCdistance && flag_Found == 0)
   {
     Serial.println("RIGHT Detected");
     Serial.println(RIGHT_distance);
-    goRight();
+    //    goRight();
     flag_Found = 1;
+    flag_Right = 1;
+    flag_Left = 0;
   }
-
-
-  //  BACK_HC();
-  //  if (BACK_distance < 30 && flag_Found == 0 )
-  //  {
-  //    goU();
-  //    delay(450);
-  //    goStop();
-  //    flag_Found = 1;
-  //  }
-  //  else
-  //  {
-  //    goStop();
-  //  }
-  //
-  //  RIGHT_HC();
-  //  if (RIGHT_distance < 30 && flag_Found == 0 )
-  //  {
-  //    goRight();
-  //    delay(450);
-  //    goStop();
-  //    flag_Found = 1;
-  //  }
-  //  else
-  //  {
-  //    goStop();
-  //  }
-  //
-  //  LEFT_HC();
-  //  if (LEFT_distance < 30 && flag_Found == 0 )
-  //  {
-  //    goLeft();
-  //    delay(450);
-  //    goStop();
-  //    flag_Found = 1;
-  //  }
-  //  else
-  //  {
-  //    goStop();
-  //  }
 }
 
 void setup() {
@@ -240,6 +214,7 @@ void setup() {
   goStop();
   Serial.println("Initializing all sensors");
   delay(2000);
+  goStop();
 }
 
 void MIDDLE_whiteLineISR() {
@@ -248,29 +223,6 @@ void MIDDLE_whiteLineISR() {
   //Serial.println("STOP Interrupt");
   MIDDLE_whiteLine = 0;
 }
-//
-//void RIGHT_whiteLineISR() {
-//  //  goLeft();
-//  //  goStop;
-//  //  goBackward();
-//  RIGHT_whiteLine = 1;
-//  //Serial.println("RIGHT Interrupt");
-//  //  MIDDLE_whiteLine = 1;
-//}
-//
-//void LEFT_whiteLineISR() {
-//  //  goStop;
-//  //  goBackward();
-//  //  goRight();
-//  digitalWrite(22, LOW);
-//  //Serial.println("Backward");
-//  myservo1.write(190);
-//  myservo2.write(0);
-//  LEFT_whiteLine = 1;
-//  //Serial.println("LEFT Interrupt");
-//  //  MIDDLE_whiteLine = 1;
-//}
-
 
 void loop()
 {
@@ -295,75 +247,30 @@ void loop()
   if (MIDDLE_whiteLine == 1)
   {
     Serial.println("No White Line");
+
     if (flag_Found == 0)
     {
       searchBot();
     }
 
-    if (flag_Found == 0)
+
+    if (flag_Found == 1 && flag_Right == 0 && flag_Left == 0)
     {
-      goU();
-      delay(10);
-      Serial.println("UUUUU");
+      goForward();
     }
 
-    //    if (flag_Found == 0)
-    //    {
-    //      if (left_count > 5) {
-    //        goForward();
-    //        delay(20);
-    //        left_count++;
-    //        if (left_count > 9) {
-    //          left_count = 0;
-    //        }
-    //      }
-    //      else {
-    //        goLeft();
-    //        delay(10);
-    //        left_count++;
-    //      }
-    //
-    //    }
-    //    flag_Found = 0;
-    //
-    //    if (LEFT_sensorVal == 0 && RIGHT_sensorVal == 1 )
-    //    {
-    //      Serial.println("LEFT Interrupt loop");
-    //      goStop();
-    //      delay(10);
-    //      goBackward();
-    //      delay(1000);
-    //      goRight();
-    //      delay(1000);
-    //      goForward();
-    //      delay(500);
-    //    }
+    else if (flag_Right == 1 && flag_Left == 0)
+    {
+      goRight();
+    }
 
-    //    if (RIGHT_sensorVal == 0 && LEFT_sensorVal == 1)
-    //    {
-    //      Serial.println("RIGHT Interrupt loop");
-    //      goStop();
-    //      delay(10);
-    //      goBackward();
-    //      delay(1000);
-    //      goLeft();
-    //      delay(1000);
-    //      goForward();
-    //      delay(500);
-    //    }
-    //
-    //    if (RIGHT_sensorVal == 0 && LEFT_sensorVal == 0)
-    //    {
-    //      Serial.println("LEFT RIGHT Interrupt loop");
-    //      goStop();
-    //      delay(100);
-    //      goU();
-    //      delay(50);
-    //      goStop();
-    //      delay(100);
-    //      goForward();
-    //      delay(100);
-    //    }
+    else if (flag_Right == 0 && flag_Left == 1)
+    {
+      goLeft();
+    }
+    else
+    {
+      goU();
+    }
   }
 }
-
