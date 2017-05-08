@@ -1,17 +1,22 @@
 int flag_Found;
 int flag_Right = 0;
 int flag_Left = 0;
-
+int flag_Attack = 0;
 int count = 0;
 int left_count = 0;
+
+#define LEDPIN 22
 
 //********** Wheels Variable **********
 #include <Servo.h>
 Servo myservo1;
 Servo myservo2;
+Servo myservo3;
 #define LEFT_servo 4
 #define RIGHT_servo 5
+#define ATTACK_servo 7
 #define HCdistance 50
+#define AttackHCdistance 10
 
 //********** QTI MIDDLE Variable **********
 // BLACK == 1
@@ -22,7 +27,7 @@ int MIDDLE_sensorVal;
 //********** QTI LEFT Variable **********
 volatile int LEFT_whiteLine;
 int LEFT_sensorVal;
-#define LEFT_pinQTIsensor 21
+#define LEFT_pinQTIsensor 6
 
 //********** QTI RIGHT Variable **********
 volatile int RIGHT_whiteLine;
@@ -30,8 +35,8 @@ int RIGHT_sensorVal;
 #define RIGHT_pinQTIsensor 3
 
 //********** HC-SR04 FRONT Variable **********
-#define FRONT_trigPin 22
-#define FRONT_echoPin 23
+#define FRONT_trigPin 25
+#define FRONT_echoPin 26
 long FRONT_duration, FRONT_distance;
 
 //********** HC-SR04 BACK Variable **********
@@ -84,10 +89,16 @@ void goRight()
 
 void goStop()
 {
-  digitalWrite(22, HIGH);
   Serial.println("Stop");
   myservo1.write(95);
   myservo2.write(95);
+  myservo3.write(95);
+}
+
+void goAttack()
+{
+  Serial.println("Attack");
+  myservo3.write(0);
 }
 
 void goU()
@@ -166,14 +177,25 @@ void searchBot ()
     flag_Right = 1;
     flag_Left = 0;
   }
+
+  if ((RIGHT_distance < AttackHCdistance || LEFT_distance < AttackHCdistance) && flag_Found == 0)
+  {
+    Serial.println("Attack Detected");
+    Serial.println();
+    flag_Found = 1;
+    flag_Attack = 1;
+  }
 }
 
 void setup() {
 
   Serial.begin(115200);
 
+  pinMode(LEDPIN, OUTPUT);
+
   myservo1.attach(LEFT_servo);  // attaches the servo on pin 9 to the servo object
   myservo2.attach(RIGHT_servo);
+  myservo3.attach(ATTACK_servo);
 
   pinMode(LEFT_pinQTIsensor, INPUT);
   digitalWrite(LEFT_pinQTIsensor, HIGH);
@@ -222,7 +244,7 @@ void loop()
   flag_Found = 0;
   flag_Left = 0;
   flag_Right = 0;
-  
+
   Serial.println("Starts reading....");
   MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
   LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
@@ -273,10 +295,22 @@ void loop()
     {
       goLeft();
     }
+
     else
     {
       goU();
     }
+
+//    if (flag_Found == 1 && flag_Attack == 1)
+//    {
+//      goAttack();
+//      delay(30);
+//      flag_Attack = 0;
+//    }
     delay(25);
+  }
+  else
+  {
+    digitalWrite(22, HIGH);
   }
 }
