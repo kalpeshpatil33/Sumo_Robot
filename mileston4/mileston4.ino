@@ -185,7 +185,7 @@ void setup() {
   digitalWrite(RIGHT_pinQTIsensor, HIGH);
 
   attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsensor), MIDDLE_whiteLineISR, LOW);
-  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
   //  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
 
   // we need to call this to enable interrupts
@@ -214,14 +214,15 @@ void setup() {
 
 void MIDDLE_whiteLineISR() {
   goStop();
-  //Serial.println(MIDDLE_sensorVal);
-  //Serial.println("STOP Interrupt");
+  Serial.println(MIDDLE_sensorVal);
+  Serial.println("STOP Interrupt");
   MIDDLE_whiteLine = 0;
 }
 
 void RIGHT_whiteLineISR() {
   Serial.println(RIGHT_sensorVal);
   Serial.println("RIGHT Interrupt");
+  goBackward();
   RIGHT_whiteLine = 0;
 }
 
@@ -235,9 +236,9 @@ void loop()
   LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
   RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
 
-  //    Serial.println("MIDDLE_sensorVal: " + String(MIDDLE_sensorVal));
-  //    Serial.println("LEFT_sensorVal: " + String(LEFT_sensorVal));
-  //    Serial.println("RIGHT_sensorVal: " + String(RIGHT_sensorVal));
+  //      Serial.println("MIDDLE_sensorVal: " + String(MIDDLE_sensorVal));
+  //      Serial.println("LEFT_sensorVal: " + String(LEFT_sensorVal));
+  //      Serial.println("RIGHT_sensorVal: " + String(RIGHT_sensorVal));
   //      RIGHT_HC();
   //      Serial.print("\t RIGHT \t" + String(RIGHT_distance));
   //      LEFT_HC();
@@ -251,12 +252,12 @@ void loop()
   //  goRight();
   //  delay(500);
 
-  //  if (  RIGHT_whiteLine == 0)
-  //  {
-  //    goBackward();
-  //    delay(2000);
-  //    RIGHT_whiteLine = 1;
-  //  }
+  if (  RIGHT_whiteLine == 0)
+  {
+    goBackward();
+    delay(2000);
+    RIGHT_whiteLine = 1;
+  }
 
   if (MIDDLE_whiteLine == 1)
   {
