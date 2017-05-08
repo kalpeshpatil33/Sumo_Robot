@@ -4,6 +4,7 @@ int flag_Left = 0;
 int flag_Attack = 0;
 int count = 0;
 int left_count = 0;
+int int_lcd = 0;
 
 #define LEDPIN 22
 
@@ -61,6 +62,7 @@ void goForward()
   Serial.println("Forward");
   myservo1.write(0);
   myservo2.write(190);
+  int_lcd = 1;
 }
 
 void goBackward()
@@ -69,6 +71,7 @@ void goBackward()
   Serial.println("Backward");
   myservo1.write(190);
   myservo2.write(0);
+  int_lcd = 2;
 }
 
 void goLeft()
@@ -77,6 +80,7 @@ void goLeft()
   Serial.println("Left");
   myservo1.write(0);
   myservo2.write(0);
+  int_lcd = 3;
 }
 
 void goRight()
@@ -85,6 +89,7 @@ void goRight()
   Serial.println("Right");
   myservo1.write(190);
   myservo2.write(190);
+  int_lcd = 4;
 }
 
 void goStop()
@@ -93,12 +98,14 @@ void goStop()
   myservo1.write(95);
   myservo2.write(95);
   myservo3.write(95);
+  int_lcd = 5;
 }
 
 void goAttack()
 {
   Serial.println("Attack");
   myservo3.write(0);
+  int_lcd = 6;
 }
 
 void goU()
@@ -106,6 +113,7 @@ void goU()
   Serial.println("U");
   myservo1.write(0);
   myservo2.write(0);
+  int_lcd = 7;
 }
 
 void FRONT_HC()
