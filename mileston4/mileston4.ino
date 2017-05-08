@@ -238,7 +238,7 @@ void setup() {
   flag_Found = 0;
   goStop();
   Serial.println("Initializing all sensors");
-  delay(2000);
+  delay(500);
   goStop();
 }
 
