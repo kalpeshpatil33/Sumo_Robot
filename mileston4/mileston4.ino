@@ -96,6 +96,7 @@ void goRight()
 void goStop()
 {
 //  Serial.println("Stop");
+digitalWrite(22, HIGH);
   myservo1.write(95);
   myservo2.write(95);
   myservo3.write(95);
@@ -318,6 +319,7 @@ void loop()
 //      flag_Attack = 0;
 //    }
     delay(25);
+    digitalWrite(22, LOW);
   }
   else
   {
