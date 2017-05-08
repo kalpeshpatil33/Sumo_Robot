@@ -47,28 +47,28 @@ void loop()
   switch (in_int) {
     case 1:
       Serial.println(in_int);
-      lcd.print("Forward      ");
+      lcd.print("I see you <3      ");
       break;
     case 2:
-      lcd.print("Backward      ");
+      lcd.print(" Let go back ..      ");
       break;
     case 3:
-      lcd.print("Left      ");
+      lcd.print(" Left ...      ");
       break;
     case 4:
-      lcd.print("Right      ");
+      lcd.print(" Right ...      ");
       break;
     case 5:
-      lcd.print("Stop      ");
+      lcd.print(" </3 :'(      ");
       break;
     case 6:
       lcd.print("Attack      ");
       break;
     case 7:
-      lcd.print("Searching      ");
+      lcd.print(" Hi ...     ");
       break;
     case 10:
-      lcd.print("Shutdown      ");
+      lcd.print("  </3 :'(    ");
       break;
     default:
       break;
