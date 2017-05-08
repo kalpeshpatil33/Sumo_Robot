@@ -5,6 +5,7 @@ int flag_Attack = 0;
 int count = 0;
 int left_count = 0;
 int int_lcd = 0;
+int int_lcd_prev = 0;
 
 #define LEDPIN 22
 
@@ -59,7 +60,7 @@ long RIGHT_duration, RIGHT_distance;
 void goForward()
 {
   digitalWrite(22, LOW);
-  Serial.println("Forward");
+//  Serial.println("Forward");
   myservo1.write(0);
   myservo2.write(190);
   int_lcd = 1;
@@ -68,7 +69,7 @@ void goForward()
 void goBackward()
 {
   digitalWrite(22, LOW);
-  Serial.println("Backward");
+//  Serial.println("Backward");
   myservo1.write(190);
   myservo2.write(0);
   int_lcd = 2;
@@ -77,7 +78,7 @@ void goBackward()
 void goLeft()
 {
   digitalWrite(22, LOW);
-  Serial.println("Left");
+//  Serial.println("Left");
   myservo1.write(0);
   myservo2.write(0);
   int_lcd = 3;
@@ -86,7 +87,7 @@ void goLeft()
 void goRight()
 {
   digitalWrite(22, LOW);
-  Serial.println("Right");
+//  Serial.println("Right");
   myservo1.write(190);
   myservo2.write(190);
   int_lcd = 4;
@@ -94,7 +95,7 @@ void goRight()
 
 void goStop()
 {
-  Serial.println("Stop");
+//  Serial.println("Stop");
   myservo1.write(95);
   myservo2.write(95);
   myservo3.write(95);
@@ -103,14 +104,14 @@ void goStop()
 
 void goAttack()
 {
-  Serial.println("Attack");
+//  Serial.println("Attack");
   myservo3.write(0);
   int_lcd = 6;
 }
 
 void goU()
 {
-  Serial.println("U");
+//  Serial.println("U");
   myservo1.write(0);
   myservo2.write(0);
   int_lcd = 7;
@@ -155,14 +156,14 @@ void RIGHT_HC()
 
 void searchBot ()
 {
-  Serial.println("Searching");
+//  Serial.println("Searching");
 
   LEFT_HC(); RIGHT_HC();
 
   if (LEFT_distance < HCdistance && RIGHT_distance < HCdistance && flag_Found == 0 )
   {
-    Serial.println("Front Detected");
-    Serial.println(String(LEFT_distance) + " " + String(RIGHT_distance));
+//    Serial.println("Front Detected");
+//    Serial.println(String(LEFT_distance) + " " + String(RIGHT_distance));
     flag_Found = 1;
     flag_Right = 0;
     flag_Left = 0;
@@ -170,8 +171,8 @@ void searchBot ()
 
   if (LEFT_distance < HCdistance && RIGHT_distance > HCdistance && flag_Found == 0)
   {
-    Serial.println("LEFT Detected");
-    Serial.println(LEFT_distance);
+//    Serial.println("LEFT Detected");
+//    Serial.println(LEFT_distance);
     flag_Found = 1;
     flag_Right = 0;
     flag_Left = 1;
@@ -179,8 +180,8 @@ void searchBot ()
 
   if (RIGHT_distance < HCdistance && LEFT_distance > HCdistance && flag_Found == 0)
   {
-    Serial.println("RIGHT Detected");
-    Serial.println(RIGHT_distance);
+//    Serial.println("RIGHT Detected");
+//    Serial.println(RIGHT_distance);
     flag_Found = 1;
     flag_Right = 1;
     flag_Left = 0;
@@ -188,8 +189,8 @@ void searchBot ()
 
   if ((RIGHT_distance < AttackHCdistance || LEFT_distance < AttackHCdistance) && flag_Found == 0)
   {
-    Serial.println("Attack Detected");
-    Serial.println();
+//    Serial.println("Attack Detected");
+//    Serial.println();
     flag_Found = 1;
     flag_Attack = 1;
   }
@@ -242,9 +243,10 @@ void setup() {
 
 void MIDDLE_whiteLineISR() {
   goStop();
-  Serial.println(MIDDLE_sensorVal);
-  Serial.println("STOP Interrupt");
+//  Serial.println(MIDDLE_sensorVal);
+//  Serial.println("STOP Interrupt");
   MIDDLE_whiteLine = 0;
+  int_lcd = 10;
 }
 
 void loop()
@@ -253,7 +255,7 @@ void loop()
   flag_Left = 0;
   flag_Right = 0;
 
-  Serial.println("Starts reading....");
+//  Serial.println("Starts reading....");
   MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
   LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
   RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
@@ -282,7 +284,7 @@ void loop()
 
   if (MIDDLE_whiteLine == 1)
   {
-    Serial.println("No White Line");
+//    Serial.println("No White Line");
 
     if (flag_Found == 0)
     {
@@ -321,4 +323,9 @@ void loop()
   {
     digitalWrite(22, HIGH);
   }
+
+  if (int_lcd_prev != int_lcd){
+    Serial.println(int_lcd_prev);
+  }
+  int_lcd_prev = int_lcd;
 }
