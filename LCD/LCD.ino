@@ -10,12 +10,19 @@ int positionCounter1 = 0;
 /*********************************************************/
 void setup()
 {
+  Serial.begin(115200);
+  Serial1.begin(115200);
   lcd.begin(16, 2); // set up the LCD's number of columns and rows:
   lcd.setCursor(15, 0); // set the cursor to column 15, line 0
 }
 /*********************************************************/
 void loop()
 {
+  String in;
+  if (Serial1.available() > 0) {
+    in = Serial1.readStringUntil('\n');
+    Serial.println(in);
+  }
   lcd.scrollDisplayLeft();
   lcd.print(array1[positionCounter1]); // Print a message to the LCD.
   delay(tim); //delay
@@ -26,21 +33,29 @@ void loop()
     lcd.clear();
     lcd.setCursor(15, 0); // set the cursor to column 15, line 0
   }
-//  lcd.setCursor(15, 0); // set the cursor to column 15, line 0
-//  for ( int positionCounter1 = 0; positionCounter1 < 26; positionCounter1++)
-//  {
-//    lcd.scrollDisplayLeft(); //Scrolls the contents of the display one space to the left.
-//    lcd.print(array1[positionCounter1]); // Print a message to the LCD.
-//    delay(tim); //wait for 500 ms
-//  }
-//  lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
-//  lcd.setCursor(15, 1); // set the cursor to column 15, line 1
-//  for (int positionCounter2 = 0; positionCounter2 < 26; positionCounter2++)
-//  {
-//    lcd.scrollDisplayLeft(); //Scrolls the contents of the display one space to the left.
-//    lcd.print(array2[positionCounter2]); // Print a message to the LCD.
-//    delay(tim); //wait for 500 ms
-//  }
-//  lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
+
+  lcd.setCursor(0, 1);
+  lcd.print(in);
+  delay(500);
+
+  while (Serial.available() > 0)
+    Serial1.read();
+    
+  //  lcd.setCursor(15, 0); // set the cursor to column 15, line 0
+  //  for ( int positionCounter1 = 0; positionCounter1 < 26; positionCounter1++)
+  //  {
+  //    lcd.scrollDisplayLeft(); //Scrolls the contents of the display one space to the left.
+  //    lcd.print(array1[positionCounter1]); // Print a message to the LCD.
+  //    delay(tim); //wait for 500 ms
+  //  }
+  //  lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
+  //  lcd.setCursor(15, 1); // set the cursor to column 15, line 1
+  //  for (int positionCounter2 = 0; positionCounter2 < 26; positionCounter2++)
+  //  {
+  //    lcd.scrollDisplayLeft(); //Scrolls the contents of the display one space to the left.
+  //    lcd.print(array2[positionCounter2]); // Print a message to the LCD.
+  //    delay(tim); //wait for 500 ms
+  //  }
+  //  lcd.clear(); //Clears the LCD screen and positions the cursor in the upper-left corner.
 }
 /************************************************************/
