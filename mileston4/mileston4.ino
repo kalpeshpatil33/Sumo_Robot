@@ -185,7 +185,7 @@ void setup() {
   digitalWrite(RIGHT_pinQTIsensor, HIGH);
 
   attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsensor), MIDDLE_whiteLineISR, LOW);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
+  //    attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
   //  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
 
   // we need to call this to enable interrupts
@@ -219,12 +219,12 @@ void MIDDLE_whiteLineISR() {
   MIDDLE_whiteLine = 0;
 }
 
-void RIGHT_whiteLineISR() {
-  Serial.println(RIGHT_sensorVal);
-  Serial.println("RIGHT Interrupt");
-  goBackward();
-  RIGHT_whiteLine = 0;
-}
+//void RIGHT_whiteLineISR() {
+//  Serial.println(RIGHT_sensorVal);
+//  Serial.println("RIGHT Interrupt");
+//  goBackward();
+//  RIGHT_whiteLine = 0;
+//}
 
 void loop()
 {
@@ -252,11 +252,10 @@ void loop()
   //  goRight();
   //  delay(500);
 
-  if (  RIGHT_whiteLine == 0)
+  if (  RIGHT_sensorVal == 0)
   {
     goBackward();
     delay(2000);
-    RIGHT_whiteLine = 1;
   }
 
   if (MIDDLE_whiteLine == 1)
