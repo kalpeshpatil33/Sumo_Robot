@@ -9,9 +9,9 @@ int left_count = 0;
 #include <Servo.h>
 Servo myservo1;
 Servo myservo2;
-#define LEFT_servo 3
-#define RIGHT_servo 4
-#define HCdistance 60
+#define LEFT_servo 4
+#define RIGHT_servo 5
+#define HCdistance 50
 
 //********** QTI MIDDLE Variable **********
 // BLACK == 1
@@ -27,11 +27,11 @@ int LEFT_sensorVal;
 //********** QTI RIGHT Variable **********
 volatile int RIGHT_whiteLine;
 int RIGHT_sensorVal;
-#define RIGHT_pinQTIsensor 20
+#define RIGHT_pinQTIsensor 3
 
 //********** HC-SR04 FRONT Variable **********
-#define FRONT_trigPin 3
-#define FRONT_echoPin 4
+#define FRONT_trigPin 22
+#define FRONT_echoPin 23
 long FRONT_duration, FRONT_distance;
 
 //********** HC-SR04 BACK Variable **********
@@ -53,7 +53,7 @@ long RIGHT_duration, RIGHT_distance;
 void goForward()
 {
   digitalWrite(22, LOW);
-  //Serial.println("Forward");
+  Serial.println("Forward");
   myservo1.write(0);
   myservo2.write(190);
 }
@@ -61,7 +61,7 @@ void goForward()
 void goBackward()
 {
   digitalWrite(22, LOW);
-  //Serial.println("Backward");
+  Serial.println("Backward");
   myservo1.write(190);
   myservo2.write(0);
 }
@@ -144,30 +144,24 @@ void searchBot ()
   {
     Serial.println("Front Detected");
     Serial.println(String(LEFT_distance) + " " + String(RIGHT_distance));
-    //    goForward();
     flag_Found = 1;
     flag_Right = 0;
     flag_Left = 0;
   }
 
-  //  LEFT_HC(); RIGHT_HC();
-
   if (LEFT_distance < HCdistance && RIGHT_distance > HCdistance && flag_Found == 0)
   {
     Serial.println("LEFT Detected");
     Serial.println(LEFT_distance);
-    //    goLeft();
     flag_Found = 1;
     flag_Right = 0;
     flag_Left = 1;
   }
-  //  LEFT_HC(); RIGHT_HC();
 
   if (RIGHT_distance < HCdistance && LEFT_distance > HCdistance && flag_Found == 0)
   {
     Serial.println("RIGHT Detected");
     Serial.println(RIGHT_distance);
-    //    goRight();
     flag_Found = 1;
     flag_Right = 1;
     flag_Left = 0;
@@ -191,12 +185,13 @@ void setup() {
   digitalWrite(RIGHT_pinQTIsensor, HIGH);
 
   attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsensor), MIDDLE_whiteLineISR, LOW);
-  //  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
+  attachInterrupt(digitalPinToInterrupt(RIGHT_pinQTIsensor), RIGHT_whiteLineISR, LOW);
   //  attachInterrupt(digitalPinToInterrupt(LEFT_pinQTIsensor), LEFT_whiteLineISR, LOW);
 
   // we need to call this to enable interrupts
   interrupts();
   MIDDLE_whiteLine = 1;
+  RIGHT_whiteLine = 1;
 
   pinMode(FRONT_trigPin, OUTPUT);
   pinMode(FRONT_echoPin, INPUT);
@@ -224,25 +219,44 @@ void MIDDLE_whiteLineISR() {
   MIDDLE_whiteLine = 0;
 }
 
+void RIGHT_whiteLineISR() {
+  Serial.println(RIGHT_sensorVal);
+  Serial.println("RIGHT Interrupt");
+  RIGHT_whiteLine = 0;
+}
+
 void loop()
 {
   flag_Found = 0;
+  flag_Left = 0;
+  flag_Right = 0;
   Serial.println("Starts reading....");
-  //  MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
-  //  LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
-  //  RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
-  //Serial.println("MIDDLE_sensorVal: " + String(MIDDLE_sensorVal));
-  //Serial.println("LEFT_sensorVal: " + String(LEFT_sensorVal));
-  //Serial.println("RIGHT_sensorVal: " + String(RIGHT_sensorVal));
-  //
-  //  RIGHT_HC();
-  //  Serial.println("RIGHT " + String(RIGHT_distance));
-  //  BACK_HC();
-  //  Serial.println("BACK " + String(BACK_distance));
-  //  LEFT_HC();
-  //  Serial.println("LEFT " + String(LEFT_distance));
-  //  goForward();
+  MIDDLE_sensorVal = digitalRead(MIDDLE_pinQTIsensor);
+  LEFT_sensorVal = digitalRead(LEFT_pinQTIsensor);
+  RIGHT_sensorVal = digitalRead(RIGHT_pinQTIsensor);
 
+  //    Serial.println("MIDDLE_sensorVal: " + String(MIDDLE_sensorVal));
+  //    Serial.println("LEFT_sensorVal: " + String(LEFT_sensorVal));
+  //    Serial.println("RIGHT_sensorVal: " + String(RIGHT_sensorVal));
+  //      RIGHT_HC();
+  //      Serial.print("\t RIGHT \t" + String(RIGHT_distance));
+  //      LEFT_HC();
+  //      Serial.println(" \tLEFT \t" + String(LEFT_distance));
+  //  goForward();
+  //  delay(500);
+  //  goBackward();
+  //  delay(500);
+  //  goLeft();
+  //  delay(500);
+  //  goRight();
+  //  delay(500);
+
+  //  if (  RIGHT_whiteLine == 0)
+  //  {
+  //    goBackward();
+  //    delay(2000);
+  //    RIGHT_whiteLine = 1;
+  //  }
 
   if (MIDDLE_whiteLine == 1)
   {
@@ -252,7 +266,6 @@ void loop()
     {
       searchBot();
     }
-
 
     if (flag_Found == 1 && flag_Right == 0 && flag_Left == 0)
     {
@@ -264,7 +277,7 @@ void loop()
       goRight();
     }
 
-    else if (flag_Right == 0 && flag_Left == 1)
+    else if (flag_Found == 1 && flag_Right == 0 && flag_Left == 1)
     {
       goLeft();
     }
@@ -272,5 +285,6 @@ void loop()
     {
       goU();
     }
+    delay(25);
   }
 }
