@@ -42,6 +42,8 @@ void loop()
   }
   int in_int = in.toInt();
 
+  in_int = random(1,7);
+
   lcd.setCursor(0, 1);
   lcd.clear();
   switch (in_int) {
@@ -59,7 +61,7 @@ void loop()
       lcd.print(" Right ...      ");
       break;
     case 5:
-      lcd.print(" </3 :'(      ");
+      lcd.print(" Stop !      ");
       break;
     case 6:
       lcd.print("Attack      ");
@@ -76,7 +78,7 @@ void loop()
 
 
   //  lcd.print(in_int);
-  delay(500);
+  delay(1000);
 
   while (Serial.available() > 0)
     Serial1.read();
