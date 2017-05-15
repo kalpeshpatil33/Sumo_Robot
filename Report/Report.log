@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.8)  8 MAY 2017 15:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.8)  15 MAY 2017 17:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -627,7 +627,12 @@ LaTeX Info: Redefining \Cpagerefrange on input line 2230.
 LaTeX Info: Redefining \labelcref on input line 2230.
 LaTeX Info: Redefining \labelcpageref on input line 2230.
 Package cleveref Info: `listings' support loaded on input line 2950.
-)) (./Report.aux)
+)
+
+Package Fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
+less on input line 112.
+
+) (./Report.aux)
 \openout1 = `Report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -644,7 +649,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
 LaTeX Font Info:    Checking defaults for FML/futm/m/it on input line 8.
 LaTeX Font Info:    Try loading font information for FML+futm on input line 8.
-(/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutm.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutm.fd
 File: fmlfutm.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futm.
 )
 LaTeX Font Info:    ... okay on input line 8.
@@ -711,7 +716,7 @@ e
 * paper: letterpaper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: twoside 
+* modes: 
 * h-part:(L,W,R)=(85.35826pt, 457.80486pt, 71.13188pt)
 * v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
 * \paperwidth=614.295pt
@@ -719,13 +724,13 @@ e
 * \textwidth=457.80486pt
 * \textheight=652.70622pt
 * \oddsidemargin=13.08827pt
-* \evensidemargin=-1.1381pt
+* \evensidemargin=13.08827pt
 * \topmargin=-38.1381pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=113.0pt
+* \marginparwidth=59.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=10.0pt plus 4.0pt minus 2.0pt
@@ -733,8 +738,8 @@ e
 * \voffset=0.0pt
 * \mag=1000
 * \@twocolumnfalse
-* \@twosidetrue
-* \@mparswitchtrue
+* \@twosidefalse
+* \@mparswitchfalse
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
@@ -772,10 +777,19 @@ LaTeX Info: Redefining \nameref on input line 8.
 \@outlinefile=\write3
 \openout3 = `Report.out'.
 
- (./First_Page.tex) [1
+ (./First_Page.tex
+! Misplaced \noalign.
+\hline ->\noalign 
+                  {\ifnum 0=`}\fi \hrule \@height \arrayrulewidth \futurelet...
+l.17 ... {\Huge Sumo Robot }\\ \vspace{4mm} \hline
+                                                    \vspace{4mm} {\Huge Repo...
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Report.toc
-LaTeX Font Info:    Try loading font information for T1+futs on input line 2.
+LaTeX Font Info:    Try loading font information for T1+futs on input line 4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/t1futs.fd
 File: t1futs.fd 2004/03/02 Fontinst v1.926 font definitions for T1/futs.
@@ -784,19 +798,19 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `futs' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Try loading font information for FML+futmi on input line 2.
+LaTeX Font Info:    Try loading font information for FML+futmi on input line 4.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/fourier/fmlfutmi.fd
 File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
 )
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 2.
+(Font)              scaled to size 10.07397pt on input line 4.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 2.
+(Font)              scaled to size 7.63599pt on input line 4.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 2.
-LaTeX Font Info:    Try loading font information for U+msa on input line 2.
+(Font)              scaled to size 5.51999pt on input line 4.
+LaTeX Font Info:    Try loading font information for U+msa on input line 4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -804,7 +818,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 2.
+LaTeX Font Info:    Try loading font information for U+msb on input line 4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -813,23 +827,46 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 2.
+(Font)              scaled to size 10.07397pt on input line 4.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 2.
+(Font)              scaled to size 7.63599pt on input line 4.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 2.
+(Font)              scaled to size 5.51999pt on input line 4.
 )
 \tf@toc=\write4
 \openout4 = `Report.toc'.
 
  [2]
-LaTeX Font Info:    Try loading font information for TS1+bch on input line 27.
+<images/front.jpg, id=80, 1324.95pt x 993.7125pt>
+File: images/front.jpg Graphic file (type jpg)
+ <use images/front.jpg>
+Package pdftex.def Info: images/front.jpg used on input line 23.
+(pdftex.def)             Requested size: 264.9853pt x 198.73897pt.
+LaTeX Font Info:    Try loading font information for TS1+bch on input line 31.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1bch.fd
 File: ts1bch.fd 2004/10/18 font definitions for TS1/bch.
-)
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 27.
+) [3 <./images/front.jpg>] <images/detailed_structure.png, id=86, 1109.14375pt 
+x 794.97pt>
+File: images/detailed_structure.png Graphic file (type png)
 
+<use images/detailed_structure.png>
+Package pdftex.def Info: images/detailed_structure.png used on input line 48.
+(pdftex.def)             Requested size: 332.7457pt x 238.49284pt.
+ [4 <./images/detailed_structure.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
+
+ []
+
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 72.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 72.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 8.27998pt on input line 72.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 72.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 72.
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
@@ -838,44 +875,66 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-<images/placeholder.png, id=27, 559.8516pt x 322.3242pt>
-File: images/placeholder.png Graphic file (type png)
+<images/qti.png, id=99, 1003.75pt x 1003.75pt>
+File: images/qti.png Graphic file (type png)
+ <use images/qti.png>
+Package pdftex.def Info: images/qti.png used on input line 75.
+(pdftex.def)             Requested size: 150.556pt x 150.556pt.
 
-<use images/placeholder.png>
-Package pdftex.def Info: images/placeholder.png used on input line 34.
-(pdftex.def)             Requested size: 559.85022pt x 322.32341pt.
-
-Overfull \hbox (102.04536pt too wide) in paragraph at lines 34--35
- [] 
+Overfull \hbox (49.75102pt too wide) in paragraph at lines 95--95
+[]    \T1/cmtt/m/n/10.95 attachInterrupt(digitalPinToInterrupt(MIDDLE_pinQTIsen
+sor), MIDDLE_whiteLineISR, LOW);[] 
  []
 
-[3 <./images/placeholder.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 45.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 45.
+<images/sonar.jpg, id=103, 1003.75pt x 1003.75pt>
+File: images/sonar.jpg Graphic file (type jpg)
+ <use images/sonar.jpg>
+Package pdftex.def Info: images/sonar.jpg used on input line 102.
+(pdftex.def)             Requested size: 150.556pt x 150.556pt.
+
+[5 <./images/qti.png>] [6 <./images/sonar.jpg>]
+<images/servo.png, id=129, 1003.75pt x 1003.75pt>
+File: images/servo.png Graphic file (type png)
+ <use images/servo.png>
+Package pdftex.def Info: images/servo.png used on input line 136.
+(pdftex.def)             Requested size: 200.74644pt x 200.74644pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 160--161
+
+ []
+
+[7 <./images/servo.png>] [8] [9] [10] [11] [12] [13] [14]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 230.
+ [15]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 230.
  (./Report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 45.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 45.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 230.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 230.
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 74A77BDE1A719F45E2993F0AE283488F;105.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 45.
+(rerunfilecheck)             Checksum: B7B3DD85BAA0243DB26DF0BE25891F28;689.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 230.
  ) 
 Here is how much of TeX's memory you used:
- 12441 strings out of 493029
- 194920 string characters out of 6136235
- 333440 words of memory out of 5000000
- 15737 multiletter control sequences out of 15000+600000
- 53544 words of font info for 73 fonts, out of 8000000 for 9000
+ 12611 strings out of 493029
+ 197106 string characters out of 6136235
+ 337379 words of memory out of 5000000
+ 15819 multiletter control sequences out of 15000+600000
+ 78901 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 33i,11n,43p,277b,411s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
-e/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/t
+ 32i,11n,43p,530b,464s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
+fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/t
 ype1/bitstrea/charter/bchb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/bit
-strea/charter/bchr8a.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095
-.pfb>
-Output written on Report.pdf (3 pages, 61880 bytes).
+strea/charter/bchr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/four
+ier/fourier-mlit.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/fourier/
+fourier-ms.pfb></usr/share/texlive/texmf-dist/fonts/type1/adobe/utopia/putr8a.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/adobe/utopia/putri8a.pfb></usr/sh
+are/texmf/fonts/type1/public/cm-super/sftt0900.pfb></usr/share/texmf/fonts/type
+1/public/cm-super/sftt1095.pfb>
+Output written on Report.pdf (15 pages, 2004333 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
- 17430 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 215 PDF objects out of 1000 (max. 8388607)
+ 180 compressed objects within 2 object streams
+ 42 named destinations out of 1000 (max. 500000)
+ 18050 words of extra memory for PDF output out of 20736 (max. 10000000)
 

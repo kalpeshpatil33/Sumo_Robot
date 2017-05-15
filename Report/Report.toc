@@ -1,2 +1,13 @@
-\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
-\contentsline {subsection}{\numberline {1.1}Resources}{3}{subsection.1.1}
+\contentsline {section}{\numberline {1}Summary}{3}{section.1}
+\contentsline {section}{\numberline {2}Physical Structure}{4}{section.2}
+\contentsline {section}{\numberline {3}Sensors and Components}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Line Detection}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Sonar Sensors}{6}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Motors}{7}{subsection.3.3}
+\contentsline {section}{\numberline {4}Attacking Mechanism}{9}{section.4}
+\contentsline {section}{\numberline {5}Display System}{10}{section.5}
+\contentsline {section}{\numberline {6}Algorithm}{11}{section.6}
+\contentsline {section}{\numberline {7}Sumo Bot Code}{12}{section.7}
+\contentsline {section}{\numberline {8}LCD System Code}{13}{section.8}
+\contentsline {section}{\numberline {9}List of Components}{14}{section.9}
+\contentsline {section}{\numberline {10}Future Developments}{15}{section.10}
