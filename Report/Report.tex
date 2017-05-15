@@ -1,4 +1,4 @@
-\documentclass[11pt,letterpaper,twoside]{article}
+\documentclass[11pt, letterpaper, oneside]{article}
 
 \input{structure}
 
@@ -7,39 +7,92 @@
 
 \begin{document}
 \input{First_Page}
-
-
 \newpage
-\end{center}
 
 
 
 \tableofcontents
 
 
-%=================================================================================
+% =================================================================================
 \newpage
-\section{Introduction}
-
-\subsection{Resources}
-This document describes the procedures for running a hexrotor in an XU4. Below are the resourses. 
-\begin{itemize}
-\item Code: \url{https://github.com/fdcl-gwu/OdroidXU4}
-\item Repo for this documentation: \url{https://github.com/fdcl-gwu/OdroidXU4_Documentation}
-\item Manuals, backups and other resources: Google Drive  (FDCL/Tutorials/ODROID\textunderscore XU4)
-\end{itemize}
+\section{Summary}
 
 \begin{figure}[bth]
-\begin{center}
-\includegraphics[scale=1]{placeholder.png}
-\caption{Pinout for CON10}
-\label{fig:pinout_CON10}
-\end{center}
+	\begin{center}
+		\includegraphics[scale = 0.2]{front.jpg}
+		\caption{Interpreter}
+		\label{fig:front}
+	\end{center}
 \end{figure}
 
-%=================================================================================
-\newpage
+We made the ``Interpreter'' for the Sumo Robot Competition, which was held as a part of the course MAE 6194. The basic functions and features of the robot are listed below.
+\begin{itemize}
+	\item Finds the opponent using sonar sensors
+	\item Detects the line using QTI sensors
+	\item If and opponent is detected, accelerates towards it
+	\item If the opponent is close enough, raise the flipping shield
+	\item Send every task the robot is performing through XBee
+	\item Another Arduino board reads the transmitted data via an XBee, and prints to an LCD display
+\end{itemize}
 
-%=================================================================================
+This report is organized as follows. First, we will discuss the details on the body structure and the sensors. Then we will be explaining how the attacking mechanism works. Next section is on details of the LCD serial monitor system which is used to continuously monitor and debug the robot. Then we will provide an overview of the overall algorithm which is used to control the robot. Finally the issues we faced and the proposed future developments. The codes are attached in the appendix.
+
+
+% =================================================================================
+\newpage
+\section{Physical Structure}
+
+\begin{figure}[bth]
+	\begin{center}
+		\includegraphics[scale = 0.2]{detailed_structure.png}
+		\caption{Structure}
+		\label{fig:detailed_structure}
+	\end{center}
+\end{figure}
+
+In this section, we discuss about the body structure of the robot and the sensors. The robots structure mainly has three parts. 
+\begin{enumerate}
+	\item Base
+	\item Top
+	\item Flipper
+\end{enumerate}
+
+
+Base holds all the motors, back and side sonar sensors, and the QTI sensors at the bottom. On top of the Base, we have placed the Top which securely holds the Arduino board, batteries, Xbee unit, and the two front sonar sensors. Flipper is hinged to the front bottom edge of the Top and a servo motor with an arm is placed on the base, directly under the flipper, to activate the attacking mechanism.
+
+% =================================================================================
+\newpage
+\section{Sensors and Components}
+\subsection{Line Detection}
+
+% =================================================================================
+\newpage
+\section{Attacking Mechanism}
+
+% =================================================================================
+\newpage
+\section{Display System}
+
+% =================================================================================
+\newpage
+\section{Algorithm}
+
+% =================================================================================
+\newpage
+\section{Sumo Bot Code}
+
+% =================================================================================
+\newpage
+\section{LCD System Code}
+
+% =================================================================================
+\newpage
+\section{List of Components}
+
+% =================================================================================
+\newpage
+\section{Future Developments}
+
 
 \end{document}
