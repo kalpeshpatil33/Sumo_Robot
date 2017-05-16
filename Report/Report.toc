@@ -5,9 +5,9 @@
 \contentsline {subsection}{\numberline {3.2}Sonar Sensors}{6}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Motors}{7}{subsection.3.3}
 \contentsline {section}{\numberline {4}Attacking Mechanism}{9}{section.4}
-\contentsline {section}{\numberline {5}Display System}{10}{section.5}
-\contentsline {section}{\numberline {6}Algorithm}{11}{section.6}
-\contentsline {section}{\numberline {7}Sumo Bot Code}{12}{section.7}
-\contentsline {section}{\numberline {8}LCD System Code}{13}{section.8}
-\contentsline {section}{\numberline {9}List of Components}{14}{section.9}
-\contentsline {section}{\numberline {10}Future Developments}{15}{section.10}
+\contentsline {section}{\numberline {5}Wireless LCD Serial Monitor}{10}{section.5}
+\contentsline {section}{\numberline {6}Algorithm}{12}{section.6}
+\contentsline {section}{\numberline {7}Future Developments}{13}{section.7}
+\contentsline {section}{\numberline {8}List of Components}{14}{section.8}
+\contentsline {section}{\numberline {9}Appendix 1: Sumo Robot Code}{15}{section.9}
+\contentsline {section}{\numberline {10}Appendix 2: Wireless LCD Serial Monitor Code}{21}{section.10}
