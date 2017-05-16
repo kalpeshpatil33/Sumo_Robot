@@ -159,7 +159,7 @@ First thing you have to do with the servo is to calibration. For example, servo 
 
 Further, depending on the time period you write these values, we can determine the angle of rotation. If you left rotate for $200\;ms$ and $400 \;ms$, robot will turn 90 and 180 degrees respectively.\\
 
-Below is snippet gives a basic idea on this.
+Belowgit at snippet gives a basic idea on this.
 \begin{verbatim}
 // define servo pins as global variables
 #define LEFT_servo = 9 
@@ -240,7 +240,7 @@ While we were debugging the code, we faced instances where we wanted see which f
 Our code inside the robot is a collection of function and we call each function in the main loop. Each function is assigned with an integer. We connected one Xbee for a Serial port in the robot Arduino. When a function is called, the integer assigned with the function is sent to XBee. We have another XBee, where the paired other XBee is attached. An LCD display also is attached to this Arduino board. The program inside this Arduino reads from XBee and prints to the LCD screen.\\
 
 
-\Cref{fig:lcd_wiring} shows the wiring diagram for the LCD. Below snippet shows how our system is run on the robots Arduino board. This keeps writing integer 6 to the XBee.
+\Cref{fig:lcd_wiring} shows the wiring diagram for the LCD\footnote{\url{https://www.sunfounder.com/media/wysiwyg/swatches/super-kit-v2-for-Arduino/8_LCD1602/fri_lcd.png}}. Below snippet shows how our system runs on the robots Arduino board. This keeps writing integer 6 to the XBee.
 \newpage
 \begin{verbatim}
 int_lcd = 0  \\ integer for LCD system
@@ -284,6 +284,7 @@ Second Arduino board's code will read this value and print respective string to 
 	\end{center}
 \end{figure}
 
+Please note that in this diagram, all the downwards arrows represent ``No'' and every other arrow represent ``Yes''.
 % =================================================================================
 \newpage
 \section{Future Developments}
